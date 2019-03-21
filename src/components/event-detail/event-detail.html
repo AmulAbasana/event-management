@@ -1,0 +1,129 @@
+<form [formGroup]="createEventFormGroup" (ngSubmit)="submitForm()" #createEventForm="ngForm">
+	<ion-grid>
+		<ion-row>
+			<ion-col col-11>
+				<ion-item>
+					<ion-label floating>Add Title<span class="required">*</span></ion-label>
+					<ion-input type="text" formControlName="eventTitle"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-2>
+				<ion-item>
+					<ion-label floating>Date<span class="required">*</span></ion-label>
+					<ion-datetime displayFormat="YYYY-MM-DD" (ionChange)="eventStartDateChanged()" [min]="minEventStartDate" [max]="2022"
+					 formControlName="eventStartDate"></ion-datetime>
+				</ion-item>
+			</ion-col>
+			<ion-col col-2 *ngIf="!createEventFormGroup.controls.eventForAllDay.value">
+				<ion-item>
+					<ion-label floating>Time<span class="required">*</span></ion-label>
+					<ion-datetime displayFormat="HH:mm" [min]="minEventStartTime" formControlName="eventStartTime"></ion-datetime>
+				</ion-item>
+			</ion-col>
+			<ion-col col-3>
+				<div class="toHeading">
+					<h6>TO</h6>
+				</div>
+			</ion-col>
+			<ion-col col-2>
+				<ion-item>
+					<ion-label floating>Date<span class="required">*</span></ion-label>
+					<ion-datetime displayFormat="YYYY-MM-DD" (ionChange)="eventEndDateChanged()" [min]="minEventEndDate" [max]="2022" formControlName="eventEndDate"></ion-datetime>
+				</ion-item>
+			</ion-col>
+			<ion-col col-2 *ngIf="!createEventFormGroup.controls.eventForAllDay.value">
+				<ion-item>
+					<ion-label floating>Time<span class="required">*</span></ion-label>
+					<ion-datetime displayFormat="HH:mm" [min]="minEventEndTime" formControlName="eventEndTime"></ion-datetime>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item no-lines>
+					<ion-label>All Day</ion-label>
+					<ion-checkbox formControlName="eventForAllDay" (ionChange)="allDayEventValueChanged()"></ion-checkbox>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-6>
+				<ion-grid>
+					<ion-row class="divTitle">
+						<p>Event Details:</p>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<!-- <ion-item>
+									<ion-label floating>Add Location<span class="required">*</span></ion-label>
+									<ion-input type="text" formControlName="eventLocation"></ion-input>
+								</ion-item> -->
+							<div class="autocomplete">
+								<ion-item>
+									<ion-label floating>Add Location<span class="required">*</span></ion-label>
+									<ion-input type="text" formControlName="eventLocation" (ionChange)="search()" (ionBlur)="removeFocus()"></ion-input>
+								</ion-item>
+								<ion-list>
+									<ion-item *ngFor="let location of locations" (click)="add(location)">
+										{{location}}
+									</ion-item>
+								</ion-list>
+							</div>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<ion-item>
+								<ion-label floating>Email<span class="required">*</span></ion-label>
+								<ion-input type="text" formControlName="eventEmailId"></ion-input>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<ion-item>
+								<ion-label floating>Description<span class="required">*</span></ion-label>
+								<ion-textarea type="text" formControlName="eventDescription"></ion-textarea>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-col>
+			<ion-col col-6>
+				<ion-row class="divTitle">
+					<p>Add Guests:</p>
+				</ion-row>
+				<ion-grid>
+					<ion-row>
+						<ion-col col-8>
+							<ion-item>
+								<ion-label floating>Enter Mail Id</ion-label>
+								<ion-input type="text" formControlName="guestEmailId"></ion-input>
+							</ion-item>
+						</ion-col>
+						<ion-col col-4 class="addGuestButtonCol">
+							<div>
+								<button ion-button type="button" (click)="addGuest()">Add Guest</button>
+							</div>
+						</ion-col>
+					</ion-row>
+					<ion-row *ngFor="let id of invitedEmailIds">
+						<ion-col>
+							<ion-item no-lines>
+								<p>{{id}}</p>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col text-center>
+				<button ion-button type="button" [disabled]="createEventForm.invalid || invitedEmailIds.length == 0 " (click)="createEventForm.ngSubmit.emit()">
+					{{flowName}}</button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>

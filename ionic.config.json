@@ -1,5 +1,11 @@
 {
   "name": "EventManagement",
   "integrations": {},
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/getLocationDetails",
+      "proxyUrl": "https://maps.googleapis.com"
+    }
+  ]
 }

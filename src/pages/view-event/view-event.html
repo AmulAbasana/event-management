@@ -1,0 +1,62 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>View Events</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-card *ngFor="let event of eventList;let i = index;">
+		<ion-card-content>
+			<ion-card-title>
+				{{event.title}}
+			</ion-card-title>
+			<ion-row>
+				<ion-col>
+					<p><strong>Descrption</strong> : {{event.description}}</p>
+				</ion-col>
+				<ion-col>
+					<p><strong>Location</strong> : {{event.location}}</p>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col>
+					<p><strong>Starting At : </strong> {{event.startDate | date : 'dd-MM-yyyy'}} {{event.startTime}}</p>
+				</ion-col>
+				<ion-col>
+					<p><strong>Ending At : </strong> {{event.endDate | date : 'dd-MM-yyyy'}} {{event.endTime}}</p>
+				</ion-col>
+			</ion-row>
+			<!-- <ion-row>
+				<ion-col>
+					<p><strong>Invited Guests :</strong></p>
+				</ion-col>
+			</ion-row>
+			<ion-grid>
+				<ion-row *ngFor="let emailId of event.guestEmailIds">
+					<ion-col>
+						<ion-item no-lines>
+							<p>{{emailId}}</p>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+			</ion-grid> -->
+		</ion-card-content>
+		<ion-row>
+			<ion-col>
+				<button ion-button icon-start clear small (click)="updateEvent(i,event)">
+					<ion-icon name="md-create"></ion-icon>
+					<div>Edit</div>
+				</button>
+			</ion-col>
+			<ion-col>
+				<button ion-button icon-start clear small (click)="deleteEvent(i)">
+					<ion-icon name="md-trash"></ion-icon>
+					<div>Delete</div>
+				</button>
+			</ion-col>
+		</ion-row>
+	</ion-card>
+	<div *ngIf="eventList && eventList.length == 0">
+		<p>No Events Available</p>
+	</div>
+</ion-content>
